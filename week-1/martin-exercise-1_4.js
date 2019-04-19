@@ -11,8 +11,7 @@
 // Require statement that imports the header.js file from my root directory.
 const header = require("../header.js");
 // Call the console.log() function and output a well-formatted header with a line feed
-console.log(header.display("Troy", "Martin", "Exercise 1.4"), "\n");
-console.log("");
+console.log(header.display("Troy", "Martin", "Exercise 1.4"), "\n", "\n");
 
 /*
   Expected output:
