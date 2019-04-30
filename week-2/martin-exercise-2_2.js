@@ -30,13 +30,13 @@ console.log("");
 // Declare the prototype object with the getAge function
 let person = {
   getAge: function(){
-    return this.age();
+    return this.age;
   }
 }
 
 // Call the Object create function to create an instance of a person and set the age and full name of the instance
 let troy = Object.create(person, {
-      age: {value: function(){return 50;}},
+      age: {value: 50},
       fullName: {value: function(){ return "Troy Martin"}
     }
   }
