@@ -29,14 +29,18 @@ console.log("");
 
 // Declare the prototype object with the getAge function
 let person = {
+  // Declare the function getAge
   getAge: function(){
+    // Return the age property of the object
     return this.age;
   }
 }
 
 // Call the Object create function to create an instance of a person and set the age and full name of the instance
 let troy = Object.create(person, {
+      // Declare an age proper and set the value
       age: {value: 50},
+      // Declare the fullName as a function and return the name of the person
       fullName: {value: function(){ return "Troy Martin"}
     }
   }
