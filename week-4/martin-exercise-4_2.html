@@ -1,0 +1,56 @@
+<!--
+============================================
+; Title: Exercise 4.2
+; Author: Troy Martin
+; Date: 05/10/2019
+; Modified By: Troy Martin
+; Description: HTTP GET and POST Operations
+;===========================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- include the bootstrap css, google fonts used on the page -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <!-- custom css for the page -->
+    <style>
+      html{
+        font-size: 16px;
+      }
+
+      body{
+        font-family: 'Source Code Pro', 'sans-serif', 'Arial', 'Tahoma', 'Veranda';
+      }
+
+      .jumbotron{
+        margin-top:1.5rem;
+      }
+    </style>
+
+    <title>Exercise 4.2</title>
+
+  </head>
+  <body>
+    <div role="main" class="container">
+      <div class="row col jumbotron">
+          <button id="btnGet" class="btn btn-primary">Get random dog images</button>
+      </div>
+    </div>
+
+    <!-- jQuery reference -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      $(function() {
+
+        $("#btnGet").on("click", function(){
+          $.get("https://dog.ceo/api/breeds/image/random", function (data, status) {
+            console.log(`Data${JSON.stringify(data)} \nStatus: ${status}`);
+          });
+        })
+
+      });
+    </script>
+  </body>
+</html>
