@@ -42,10 +42,13 @@
     <!-- jQuery reference -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
+      // jQuery ready function
       $(function() {
-
+        // Use a jQuery selector to set the click event of the button
         $("#btnGet").on("click", function(){
+          // ajax GET with a function to log the response
           $.get("https://dog.ceo/api/breeds/image/random", function (data, status) {
+            // Call the console log function to output the data to the console along with the status
             console.log(`Data${JSON.stringify(data)} \nStatus: ${status}`);
           });
         })

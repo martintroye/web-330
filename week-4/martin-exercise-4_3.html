@@ -42,18 +42,26 @@
     <!-- jQuery reference -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
+      // jQuery ready function
       $(function() {
 
+        // Use a jQuery selector to set the click event of the button
         $("#btnDelete").on("click", function(){
+          // ajax DELETE
           $.ajax({
             url: "http://httpbin.org/delete",
             dataType: "json",
             type: "DELETE",
+            // Set the data on the request
             data: {name: "Troy Martin", assignment: "Exercise 4.3", date: new Date().toLocaleDateString()},
+            // set the success callback function
             success: function (data, status) {
+              // Call the console log function and output the data
               console.log(`Name: ${data.form.name} \nAssignment: ${data.form.assignment} \nDate: ${data.form.date} \nStatus: ${status}`);
             },
+            // set the error callback function
             error: function(xhr, status, error){
+              // Call the console log to output the error
               console.log(error);
             }
           })
