@@ -75,7 +75,7 @@
 
     // jQuery document ready function to initialize the page
     $(function() {
-      // use the jQuery selector for the button and set the click event to proxy the display method of the field, passing the selector for the output
+      // use the jQuery selector for the button and set the click event to proxy the display method of the field, passing the selector name for the target of the output
       $("#btnClickMe").on("click.proxy", $.proxy(field, "display", "#output"))
     });
   </script>
