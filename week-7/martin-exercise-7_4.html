@@ -1,0 +1,104 @@
+<!--
+============================================
+; Title: Assignment 7.3
+; Author: Troy Martin
+; Date: 05/31/2019
+; Modified By: Troy Martin
+; Description: Other bindings
+;===========================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Assignment 7.4, Other bindings</title>
+
+    <!-- include the bootstrap css, google fonts used on the page -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- custom css for the page -->
+    <style>
+      html{
+        font-size: 16px;
+      }
+
+      body{
+        font-family: 'Josefin Sans', 'sans-serif', 'Arial', 'Tahoma', 'Veranda';
+      }
+
+      p{
+        margin-top: 2rem;
+      }
+
+      .externalIcon::after {
+        font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\00a0\f360";
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- create the base container on the page -->
+    <div role="main" class="container">
+      <br/><br/>
+      <h2>Assignment 7.4 Other bindings</h2>
+      <table class="table table-light table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>URI</th>
+          </tr>
+        </thead>
+        <!-- bind the body to the array of text books to repeat the row -->
+        <tbody data-bind="foreach:tutorials">
+          <tr>
+            <!-- bind the cell to the title of the text book -->
+            <td data-bind="text: title"></td>
+            <!-- bind the cell to the price of the text book, simple concatenate for dollar sign-->
+            <td data-bind="text: description"></td>
+            <td><a data-bind="text:uri, attr: {href: uri, title: uri}, css:'externalIcon'" target="_blank"></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- include the jquery, popper and the bootstrap javascript files to support the use of the bootstrap framework -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- include the Knockoutjs library -->
+    <script src="../knockout-3.5.0.js"></script>
+
+    <script>
+      // an array of text books to bind
+      var tutorialList = [
+        {id: 1, title: "JavaScript Where To", description: "Where to put JavaScript on your page.", uri: "https://www.w3schools.com/js/js_whereto.asp"},
+        {id: 2, title: "JavaScript Output", description: "How to output values.", uri: "https://www.w3schools.com/js/js_output.asp"},
+        {id: 3, title: "JavaScript Statements", description: "Defining statements.", uri: "https://www.w3schools.com/js/js_statements.asp"},
+        {id: 4, title: "JavaScript Syntax", description: "All about syntax.", uri: "https://www.w3schools.com/js/js_syntax.asp"},
+        {id: 5, title: "JavaScript Comments", description: "Adding comments to your JavaScript.", uri: "https://www.w3schools.com/js/js_comments.asp"},
+      ];
+
+      /*
+      ; Params: none
+      ; Response: none
+      ; Description: JavaScript tutorials view model
+      */
+      function JavaScriptTutorialsViewModel(){
+        // Declare the first and last name setting to an empty observable
+        this.tutorials = ko.observableArray(tutorialList);
+      }
+
+      // jQuery document ready function to setup document
+      $(function(){
+        // Call the applyBindings function from Knockout passing the view model
+        ko.applyBindings(new JavaScriptTutorialsViewModel());
+      });
+    </script>
+
+  </body>
+</html>
