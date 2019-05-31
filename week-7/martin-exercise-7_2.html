@@ -71,7 +71,11 @@
     <script src="../knockout-3.5.0.js"></script>
 
     <script>
-      // Declare the object literal view model
+      /*
+      ; Params: none
+      ; Response: none
+      ; Description: Person view model
+      */
       function PersonViewModel(){
         // Declare the first and last name setting to an empty observable
         this.firstName = ko.observable();
@@ -82,13 +86,15 @@
           return this.firstName();
         }, this);
 
-        // Create a computed observable that will combine the first and last name
+        // Create a computed observable that will combine the first and last name when they change
         this.displayFullName = ko.pureComputed(function(){
+          // concatenate and return the first and last name
           return `${this.firstName()} ${this.lastName()}`;
         }, this);
 
       }
 
+      // jQuery document ready function to setup document
       $(function(){
         // Call the applyBindings function from Knockout passing the view model
         ko.applyBindings(new PersonViewModel());
