@@ -1,0 +1,103 @@
+<!--
+============================================
+; Title: Exercise 7.2
+; Author: Troy Martin
+; Date: 05/31/2019
+; Modified By: Troy Martin
+; Description: The "if" binding
+;===========================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Exercise 7.2</title>
+
+    <!-- include the bootstrap css, google fonts used on the page -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <!-- custom css for the page -->
+    <style>
+      html{
+        font-size: 16px;
+      }
+
+      body{
+        font-family: 'Josefin Sans', 'sans-serif', 'Arial', 'Tahoma', 'Veranda';
+      }
+
+      p{
+        margin-top: 2rem;
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- create the base container on the page -->
+    <div role="main" class="container">
+      <br/><br/>
+      <h2>Exercise 7.2 "if" binding</h2>
+      <div class="row">
+        <div class="form-group col-4 offset-2">
+          <label for="txtFirstName">First name</label>
+          <!-- Bind the firstName to the input value and set the binding to update on keyup -->
+          <input type="text" id="txtFirstName" class="form-control" data-bind="value: firstName, valueUpdate:'keyup'" />
+        </div>
+        <!-- if displayLastName has a value then the div will be displayed otherwise it will be hidden -->
+        <div class="form-group col-4" data-bind="if: displayLastName">
+          <label for="txtLastName">Last name</label>
+          <!-- Bind the lastName to the input value and set the binding to update on keyup -->
+          <input type="text" id="txtLastName" class="form-control" data-bind="value: lastName, valueUpdate:'keyup'" />
+        </div>
+      </div>
+        <!-- if lastName has a value then the div will be displayed otherwise it will be hidden -->
+        <div class="row" data-bind="if:lastName">
+        <div class="col-4 offset-4">
+          <br/>
+          <!-- Bind the computed displayFullName to the span text -->
+          <h2><span id="fullNameOutput" data-bind="text: displayFullName" class="alert-success"></span></h2>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- include the jquery, popper and the bootstrap javascript files to support the use of the bootstrap framework -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- include the Knockoutjs library -->
+    <script src="../knockout-3.5.0.js"></script>
+
+    <script>
+      // Declare the object literal view model
+      function PersonViewModel(){
+        // Declare the first and last name setting to an empty observable
+        this.firstName = ko.observable();
+        this.lastName = ko.observable();
+
+        // Create a computed observable that will return the firstName when it changes
+        this.displayLastName = ko.pureComputed(function(){
+          return this.firstName();
+        }, this);
+
+        // Create a computed observable that will combine the first and last name
+        this.displayFullName = ko.pureComputed(function(){
+          return `${this.firstName()} ${this.lastName()}`;
+        }, this);
+
+      }
+
+      $(function(){
+        // Call the applyBindings function from Knockout passing the view model
+        ko.applyBindings(new PersonViewModel());
+
+        // Select the text input and set focus to start typing
+        $("#txtFirstName").focus().select();
+
+      });
+    </script>
+
+  </body>
+</html>
