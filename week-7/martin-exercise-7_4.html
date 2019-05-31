@@ -56,10 +56,11 @@
         <!-- bind the body to the array of text books to repeat the row -->
         <tbody data-bind="foreach:tutorials">
           <tr>
-            <!-- bind the cell to the title of the text book -->
+            <!-- bind the cell to the title of the tutorial -->
             <td data-bind="text: title"></td>
-            <!-- bind the cell to the price of the text book, simple concatenate for dollar sign-->
+            <!-- bind the cell to the description of the tutorial-->
             <td data-bind="text: description"></td>
+            <!-- bind the cell to the uri of the tutorial, apply the href and title attribute and set the css to show the icon-->
             <td><a data-bind="text:uri, attr: {href: uri, title: uri}, css:'externalIcon'" target="_blank"></a></td>
           </tr>
         </tbody>
@@ -89,7 +90,7 @@
       ; Description: JavaScript tutorials view model
       */
       function JavaScriptTutorialsViewModel(){
-        // Declare the first and last name setting to an empty observable
+        // declare the observable array and set it using the list ot tutorials
         this.tutorials = ko.observableArray(tutorialList);
       }
 
