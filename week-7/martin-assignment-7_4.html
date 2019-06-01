@@ -2,7 +2,7 @@
 ============================================
 ; Title: Assignment 7.4
 ; Author: Troy Martin
-; Date: 05/31/2019
+; Date: 06/01/2019
 ; Modified By: Troy Martin
 ; Description: Other bindings
 ;===========================================
@@ -50,7 +50,7 @@
           <tr>
             <th>Title</th>
             <th>Description</th>
-            <th>URI</th>
+            <th>Link</th>
           </tr>
         </thead>
         <!-- bind the body to the array of text books to repeat the row -->
@@ -60,8 +60,8 @@
             <td data-bind="text: title"></td>
             <!-- bind the cell to the description of the tutorial-->
             <td data-bind="text: description"></td>
-            <!-- bind the cell to the uri of the tutorial, apply the href and title attribute and set the css to show the icon-->
-            <td><a data-bind="text:uri, attr: {href: uri, title: uri}, css:'externalIcon'" target="_blank"></a></td>
+            <!-- bind the cell to the link of the tutorial, apply the href and title attribute and set the css to show the icon applying the css in the bind prevents the icon from showing before the binding-->
+            <td><a data-bind="text:link, attr: {href: link, title: link}, css:'externalIcon'" target="_blank"></a></td>
           </tr>
         </tbody>
       </table>
@@ -77,19 +77,19 @@
     <script>
       // an array of text books to bind
       var tutorialList = [
-        {id: 1, title: "JavaScript Where To", description: "Where to put JavaScript on your page.", uri: "https://www.w3schools.com/js/js_whereto.asp"},
-        {id: 2, title: "JavaScript Output", description: "How to output values.", uri: "https://www.w3schools.com/js/js_output.asp"},
-        {id: 3, title: "JavaScript Statements", description: "Defining statements.", uri: "https://www.w3schools.com/js/js_statements.asp"},
-        {id: 4, title: "JavaScript Syntax", description: "All about syntax.", uri: "https://www.w3schools.com/js/js_syntax.asp"},
-        {id: 5, title: "JavaScript Comments", description: "Adding comments to your JavaScript.", uri: "https://www.w3schools.com/js/js_comments.asp"},
-      ];
+        {id: 1, title: "JavaScript Where To", description: "Where to put JavaScript on your page.", link: "https://www.w3schools.com/js/js_whereto.asp"},
+        {id: 2, title: "JavaScript Output", description: "How to output values.", link: "https://www.w3schools.com/js/js_output.asp"},
+        {id: 3, title: "JavaScript Statements", description: "Defining statements.", link: "https://www.w3schools.com/js/js_statements.asp"},
+        {id: 4, title: "JavaScript Syntax", description: "All about syntax.", link: "https://www.w3schools.com/js/js_syntax.asp"},
+        {id: 5, title: "JavaScript Comments", description: "Adding comments to your JavaScript.", link: "https://www.w3schools.com/js/js_comments.asp"},
+      ]
 
       /*
       ; Params: none
       ; Response: none
       ; Description: JavaScript tutorials view model
       */
-      function JavaScriptTutorialsViewModel(){
+      function JavaScriptTutorialViewModel(){
         // declare the observable array and set it using the list ot tutorials
         this.tutorials = ko.observableArray(tutorialList);
       }
@@ -97,7 +97,7 @@
       // jQuery document ready function to setup document
       $(function(){
         // Call the applyBindings function from Knockout passing the view model
-        ko.applyBindings(new JavaScriptTutorialsViewModel());
+        ko.applyBindings(new JavaScriptTutorialViewModel());
       });
     </script>
 
