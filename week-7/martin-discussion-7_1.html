@@ -1,0 +1,120 @@
+<!--
+============================================
+; Title: Discussion 7.1
+; Author: Troy Martin
+; Date: 05/31/2019
+; Modified By: Troy Martin
+; Description: Custom binding example
+;===========================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Discussion 7.1, Custom binding example</title>
+
+    <!-- include the bootstrap css, google fonts used on the page -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Source+Code+Pro:400,700" rel="stylesheet">
+    <!-- custom css for the page -->
+    <style>
+      html{
+        font-size: 16px;
+      }
+
+      body{
+        font-family: 'Josefin Sans', 'sans-serif', 'Arial', 'Tahoma', 'Veranda';
+      }
+
+      p{
+        margin-top: 2rem;
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- create the base container on the page -->
+    <div role="main" class="container">
+      <br/><br/>
+      <h2>Discussion 7.1 Custom binding example</h2>
+      <table class="table table-light table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Assignment</th>
+            <th>Due</th>
+          </tr>
+        </thead>
+        <!-- bind the body to the array of assignments to repeat the row -->
+        <tbody data-bind="foreach:assignments">
+          <tr>
+            <!-- bind the cell to the name of the assignment -->
+            <td data-bind="text: name"></td>
+            <!-- bind the cell to the due date of the assignment, use the custom binding to provide a consistent date format-->
+            <td data-bind="formatDateEnUs: dueDate"></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- include the jquery, popper and the bootstrap javascript files to support the use of the bootstrap framework -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- include the Knockoutjs library -->
+    <script src="../knockout-3.5.0.js"></script>
+
+    <script>
+      // an array of assignments to bind with various date formats
+      var assignmentList = [
+        {id: 1, name: "7.1 Discussion Bindings", dueDate: "2019-06-02T23:59:59"},
+        {id: 2, name: "7.2 Exercise The 'if' binding", dueDate: "2019-06-05T23:59:59"},
+        {id: 3, name: "7.3 Exercise The 'foreach' binding", dueDate: "2019-06-05T23:59:59"},
+        {id: 4, name: "7.4 Assignment The other bindings", dueDate: "2019-06-05T23:59:59"},
+      ];
+
+      // custom binding to format the bound date value
+      ko.bindingHandlers.formatDateEnUs = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+          // get the data the element is bound to
+          var dataValue = valueAccessor();
+          // get the current value
+          var dateValue = ko.unwrap(dataValue);
+
+          // initialize the formatted date to an empty string
+          var formattedDate = ""
+          // if there is a value parse the date
+          if (dateValue) {
+            // Call the parse function of the Date object
+            var parsedDate = Date.parse(dateValue);
+            if(!isNaN(parsedDate)){
+              var dateTime = new Date(parsedDate);
+              formattedDate = dateTime.toLocaleString("en-US");
+            }
+          }
+          // set the html of the bound element to the formatted date
+          element.innerHTML = formattedDate;
+        }
+      };
+
+      /*
+      ; Params: none
+      ; Response: none
+      ; Description: Assignment view model
+      */
+      function AssignmentViewModel(){
+        // Declare the assignment array setting to an a list of assignments
+        this.assignments = ko.observableArray(assignmentList);
+      }
+
+      // jQuery document ready function to setup document
+      $(function(){
+        // Call the applyBindings function from Knockout passing the view model
+        ko.applyBindings(new AssignmentViewModel());
+      });
+    </script>
+
+  </body>
+</html>
