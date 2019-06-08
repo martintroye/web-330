@@ -1,0 +1,214 @@
+<!--
+============================================
+; Title: Exercise 8.3
+; Author: Troy Martin
+; Date: 06/07/2019
+; Modified By: Troy Martin
+; Description: UD Operations
+;===========================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Exercise 8.3</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  </head>
+  <body>
+    <div role="main" class="container">
+      <br/><br/>
+      <div class="row" data-bind="if:error">
+        <div class="col-sm-12">
+          <div class="alert alert-danger" role="alert">
+            <!-- Bind the text to the observable on the view model -->
+            <strong>Warning</strong><span data-bind="text:error()"></span>
+          </div>
+        </div>
+      </div>
+
+      <br/>
+
+      <h2>UD Example</h2>
+
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="card card-inverse" style="background-color: #333;border-color:#333;color:white">
+            <div class="card-block p-3">
+              <h3 class="card-title">Employee List</h3>
+              <div class="card-text">
+                <table class="table table-dark table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>Employee Id</th>
+                      <th>Name</th>
+                      <th>Functions</th>
+                    </tr>
+                  </thead>
+                  <!-- Bind the list of employees -->
+                  <tbody data-bind="foreach: Employees">
+                    <tr>
+                      <!-- Bind the id and name to the cells -->
+                      <td data-bind="text: Id"></td>
+                      <td data-bind="text: Name"></td>
+                      <td>
+                        <span>
+                          <!-- Bind the click event to the edit function of the view model-->
+                          <a href="#" class="btn btn-success" data-bind="click: $root.edit"><i class="fa fa-pencil fa-lg"></i> Edit</a>
+                        </span> |
+                        <span>
+                          <!-- Bind the click event to the remove function of the view model -->
+                          <a href="#" class="btn btn-danger" data-bind="click:$root.remove"><i class="fa fa-trash-o fa-lg"></i> Delete</a>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- if the Employee observable is set display the div -->
+        <div class="col-sm-4" data-bind="if:Employee">
+          <div class="card card-inverse" style="background-color: #333; border-color:#333; color:white">
+            <div class="card-block p-3">
+              <h3 class="card-title">Employee List Item</h3>
+              <div class="card-text">
+                <div class="form-group">
+                  <label for="txtName">Name:</label>
+                  <!-- Bind the input value to the Name of the current employee, calling the observable as a function to get the Name property-->
+                  <input type="text" id="txtName" data-bind="value:Employee().Name" class="form-control">
+                </div>
+                <div class="form-group float-right">
+                  <!-- Bind the click event to the cancel function of the view model -->
+                  <button data-bind="click: $root.cancel" class="btn btn-group btn-danger">Cancel</button>
+                  <!-- Bind the click event to the update function of the view model -->
+                  <button data-bind="click: $root.update" class="btn btn-group btn-success">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include the jquery, popper and the bootstrap javascript files to support the use of the bootstrap framework -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Include the Knockout library -->
+    <script src="../knockout-3.5.0.js"></script>
+
+    <script>
+      /*
+      ; Params: none
+      ; Response: none
+      ; Description: Employee List view model
+      */
+      function Employee(id, name){
+        // Declare the properties of the employee and default to the params of the function
+        this.Id = id;
+        this.Name = name;
+      }
+
+      // Declare a list of employees to display
+      var employeeList = [
+        new Employee(1, "Troy Martin"),
+        new Employee(2, "Mark Hartman"),
+        new Employee(3, "Mike Barton"),
+        new Employee(4, "Jared Vogeltanz"),
+        new Employee(5, "Joe Gaston")
+      ];
+
+      /*
+      ; Params: none
+      ; Response: none
+      ; Description: Employee view model
+      */
+      function EmployeeViewModel(){
+        // Declare variable self and set to this to allow easy access to closure
+        var self = this;
+
+        // Declare the properties for the form and error display
+        self.error = ko.observable();
+        self.Id = ko.observable();
+        self.Name = ko.observable();
+
+        // Declare Employee and set properties to observables
+        var Employee = {
+          Id: self.Id,
+          Name: self.Name
+        };
+
+        // Declare the observable employee
+        self.Employee = ko.observable();
+        // Declare the observable array of employees
+        self.Employees = ko.observableArray(employeeList);
+
+        /*
+        ; Params: employee: observable
+        ; Response: none
+        ; Description: Set the Employee to edit
+        */
+        self.edit = function(employee){
+          // Set the observable
+          self.Employee(employee);
+        };
+
+        /*
+        ; Params: employee: observable
+        ; Response: none
+        ; Description: Remove the Employee from the array
+        */
+        self.remove = function(employee){
+          // Call the Array remove function to remove the matching Employee
+          self.Employees.remove(employee);
+        };
+
+        /*
+        ; Params: none
+        ; Response: none
+        ; Description: Clear the Employee observable
+        */
+        self.cancel = function(){
+          self.Employee(null);
+        };
+
+        /*
+        ; Params: none
+        ; Response: none
+        ; Description: Update the employee and the array
+        */
+        self.update = function(){
+          // Get the current employee
+          var employee = self.Employee();
+          // Remove the employee from the array
+          self.Employees.remove(self.Employee());
+          // Put the employee back into the array
+          self.Employees.push(employee);
+          // Clear the current employee
+          self.Employee(null);
+        }
+
+      }
+
+      // jQuery ready function
+      $(function(){
+        // Call the applyBindings function to bind the view model to the page
+        ko.applyBindings(new EmployeeViewModel())
+      })
+
+    </script>
+  </body>
+</html>
